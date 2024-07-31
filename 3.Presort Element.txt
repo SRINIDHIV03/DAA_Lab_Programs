@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Comparison function for qsort
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void unique_element(int* A, int size) {
+    // Sort the array
+    qsort(A, size, sizeof(int), compare);
+
+    // Traverse the array
+    for (int i = 0; i < size - 1; i++) {
+        int temp = A[i];
+        int temp1 = A[i + 1];
+
+        // Check if the element is the same as its adjacent element
+        if (temp == temp1) {
+            printf("Element %d is not unique\n", temp);
+        } else {
+            printf("Element %d is unique\n", temp);
+        }
+    }
+
+    // Check the last element
+    if (A[size - 2] != A[size - 1]) {
+        printf("Element %d is unique\n", A[size - 1]);
+    } else {
+        printf("Element %d is not unique\n", A[size - 1]);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int* A = (int*)malloc(n * sizeof(int));
+    if (A == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
+    printf("Enter the elements: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &A[i]);
+    }
+
+    unique_element(A, n);
+
+    free(A);
+    return 0;
+}
